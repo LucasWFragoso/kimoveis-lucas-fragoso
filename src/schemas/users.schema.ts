@@ -14,7 +14,10 @@ const userSchema = userDataRequest.extend({
     deletedAt: z.date().nullable()
 }).omit({password: true})
 
+const listUsersSchema = z.array(userSchema)
+
 export {
     userDataRequest,
-    userSchema
+    userSchema,
+    listUsersSchema
 }

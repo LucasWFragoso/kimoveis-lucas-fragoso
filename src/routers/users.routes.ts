@@ -8,4 +8,7 @@ const usersRoutes: Router = Router()
 
 usersRoutes.post('', verifyEmailExistMiddleware, ensureDataIsValidMiddleware(userDataRequest), createUserController)
 
-export default usersRoutes
+
+export {
+    usersRoutes  
+}
