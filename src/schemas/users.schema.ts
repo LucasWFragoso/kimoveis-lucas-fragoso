@@ -7,17 +7,24 @@ const userDataRequest = z.object({
     admin: z.boolean().default(false)
 })
 
-const userSchema = userDataRequest.extend({
+const user = userDataRequest.extend({
     id: z.number(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-    deletedAt: z.date().nullable()
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    deletedAt: z.string().nullable()
+})
+
+const userSchemaReturn = user.extend({
 }).omit({password: true})
 
-const listUsersSchema = z.array(userSchema)
+const listUsersSchema = z.array(userSchemaReturn)
+
+const patchUserSchema = userDataRequest.partial().omit({admin: true})
 
 export {
+    user,
     userDataRequest,
-    userSchema,
-    listUsersSchema
+    userSchemaReturn,
+    listUsersSchema,
+    patchUserSchema
 }
