@@ -18,7 +18,8 @@ const ensureTokenIsValidMiddleware = async (req: Request, res: Response, next: N
         }
 
         req.user = {
-            isAdmin: decoded.isAdmin
+            isAdmin: decoded.isAdmin,
+            id: Number(decoded.sub)
         }
 
         next()

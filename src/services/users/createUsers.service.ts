@@ -1,17 +1,17 @@
 import { Repository } from "typeorm"
 import { AppDataSource } from "../../data-source"
 import { User } from "../../entities"
-import { IUser, IUserData } from "../../interfaces/users.interfaces"
-import { userSchema } from "../../schemas/users.schema"
+import { IUserReturn, IUserData } from "../../interfaces/users.interfaces"
+import { userSchemaReturn } from "../../schemas/users.schema"
 
-const createUserService = async (userData: IUserData): Promise<IUser> => {
+const createUserService = async (userData: IUserData): Promise<IUserReturn> => {
     const userRepository: Repository<User> = AppDataSource.getRepository(User)
 
     const user: User = userRepository.create(userData)
 
     await userRepository.save(user)
 
-    const userCreate = userSchema.parse(user)
+    const userCreate = userSchemaReturn.parse(user)
 
     return userCreate
 }
