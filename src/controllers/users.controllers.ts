@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IListUser, IPatchUser, IUserReturn, IUserData } from "../interfaces/users.interfaces";
-import { createUserService, listUsersService, patchUserService } from "../services/users";
+import { createUserService, deleteUserService, listUsersService, patchUserService } from "../services/users";
 
 export const createUserController = async (req: Request, res: Response): Promise< Response > => {
     const userData: IUserData = req.body
@@ -28,4 +28,13 @@ export const patchUserController = async (req: Request, res: Response): Promise<
     
 
     return res.status(200).json(patchUser)
+}
+
+export const deleteUserController = async (req: Request, res: Response): Promise< Response > => {
+    const isAdmin: boolean = req.user.isAdmin
+    const idPatch: number = parseInt(req.params.id)
+
+    await deleteUserService(isAdmin, idPatch)
+    
+    return res.status(204).send()
 }
