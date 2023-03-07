@@ -20,7 +20,10 @@ const realEstateReturnSchema =z.object({
     updatedAt: z.string()
 })
 
+const realEstateListSchema = z.array(realEstateReturnSchema)
+
 export { 
     realEstateDataSchema,
-    realEstateReturnSchema
+    realEstateReturnSchema,
+    realEstateListSchema
 }
