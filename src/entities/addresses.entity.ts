@@ -12,7 +12,7 @@ class Address{
     @Column({length: 8})
     zipCode: string
 
-    @Column({ type: String , length: 6, nullable: true})
+    @Column({ type: String , length: 7, nullable: true})
     number?: string | null | undefined
 
     @Column({length: 20})
