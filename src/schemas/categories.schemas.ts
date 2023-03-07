@@ -8,7 +8,10 @@ const categoriesReturnSchema = categoriesDataSchema.extend({
     id: z.number()
 })
 
+const categoriesList = z.array(categoriesReturnSchema)
+
 export {
     categoriesDataSchema,
-    categoriesReturnSchema
+    categoriesReturnSchema,
+    categoriesList
 }
