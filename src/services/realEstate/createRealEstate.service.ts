@@ -17,20 +17,18 @@ const createRealEstateService = async (isAdmin: boolean, dataBody: IRealEstateDa
     const addressCreated: Address = addressRepository.create(dataBody.address)
     await addressRepository.save(addressCreated)
     
-    const reaEstateCreated: RealEstate = realEstateRepository.create(dataBody)
-    await realEstateRepository.save(reaEstateCreated)
-    
-    const category: Category | null = await categoryRepository.findOneBy({
+    const category: any = await categoryRepository.findOneBy({
         id: dataBody.categoryId
     })
 
-    const newRealEstate: IRealEstateReturn = {
-        ...reaEstateCreated,
+    const reaEstateCreated: RealEstate = realEstateRepository.create({
+        ...dataBody,
         address: addressCreated,
-        category: category!
-    }
-
-    const newRealEstateValidated = realEstateReturnSchema.parse(newRealEstate)
+        category: category
+    })
+    await realEstateRepository.save(reaEstateCreated)
+    
+    const newRealEstateValidated = realEstateReturnSchema.parse(reaEstateCreated)
 
     return newRealEstateValidated
 
