@@ -20,7 +20,7 @@ const createRealEstateService = async (isAdmin: boolean, dataBody: IRealEstateDa
     const category: any = await categoryRepository.findOneBy({
         id: dataBody.categoryId
     })
-
+    console.log(dataBody, addressCreated, category)
     const reaEstateCreated: RealEstate = realEstateRepository.create({
         ...dataBody,
         address: addressCreated,

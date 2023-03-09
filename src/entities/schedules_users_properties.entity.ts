@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import {RealEstate} from "./real_estate.entity";
 import {User} from "./users.entity";
 
@@ -14,11 +14,13 @@ class Schedule {
     @Column('time')
     hour: Date;
 
-    @ManyToOne(() => RealEstate)
-    realEstate: number
+    @ManyToOne(() => RealEstate, real_estate => real_estate.schedules )
+    @JoinColumn()
+    realEstate: RealEstate
 
-    @ManyToOne(() => User)
-    user: number
+    @ManyToOne(() => User, users => users.schedules)
+    @JoinColumn()
+    user: User
 }
 
 export {
