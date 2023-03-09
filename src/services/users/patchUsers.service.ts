@@ -13,7 +13,11 @@ const patchUserService = async (idUser: number, isAdmin: boolean, dataPatch: IPa
         id: idPatch
     })
 
-    if(isAdmin){
+    if(!userForPatch){
+        throw new AppError('User not found', 404)
+    }
+
+    if(isAdmin === true){
         const userUpdated = userRepository.create({
             ...userForPatch,
             ...dataPatch

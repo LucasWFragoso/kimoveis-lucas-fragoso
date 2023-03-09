@@ -6,18 +6,18 @@ import { IListUser } from "../../interfaces/users.interfaces";
 import { listUsersSchema } from "../../schemas/users.schema";
 
 const listUsersService = async (isAdmin: boolean): Promise<IListUser> => {
-    
-    if(!isAdmin){
-        throw new AppError('User not admin', 403)
-    }
-    
     const userRepository: Repository<User> = AppDataSource.getRepository(User)
 
-    const listUsers: Array<User> = await userRepository.find()
-
-    const returnListUsers = listUsersSchema.parse(listUsers)
-
-    return returnListUsers
+    if(isAdmin === true){
+        const listUsers: Array<User> = await userRepository.find()
+        
+        const returnListUsers = listUsersSchema.parse(listUsers)
+        
+        return returnListUsers
+    }else{
+        throw new AppError('Insufficient permission', 403)
+    }
+    
 }
 
 export default listUsersService
