@@ -20,10 +20,20 @@ const realEstateReturnSchema =z.object({
     updatedAt: z.string()
 })
 
+const realEstateListByCategory = z.object({
+    id: z.number(),
+    value: z.string().or(z.number()),
+    size: z.number(),
+    sold: z.boolean(),
+    createdAt: z.string(),
+    updatedAt: z.string()
+}) 
+
 const realEstateListSchema = z.array(realEstateReturnSchema)
 
 export { 
     realEstateDataSchema,
     realEstateReturnSchema,
-    realEstateListSchema
+    realEstateListSchema,
+    realEstateListByCategory
 }

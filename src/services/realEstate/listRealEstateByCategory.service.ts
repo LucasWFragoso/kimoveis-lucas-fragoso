@@ -1,13 +1,22 @@
+import { Repository } from "typeorm"
 import { AppDataSource } from "../../data-source"
-import { RealEstate } from "../../entities"
+import { Category, RealEstate } from "../../entities"
+import { AppError } from "../../errors"
+import { categoriesRealStateList } from "../../schemas/categories.schemas"
 
 const ListRealEstateByCategoryService = async (idCategory: number) => {
-    const list = await AppDataSource.createQueryBuilder(RealEstate, 'real_estate').
-    innerJoinAndSelect('real_estate.category', 'categories').
-    innerJoinAndSelect('real_estate.address', 'addresses').
-    where('real_estate.category = :idCategory', {idCategory}).
-    getMany()
+    const categoriesRepository: Repository<Category> = AppDataSource.getRepository(Category)
+    const categoriesQueryBuilder = categoriesRepository.createQueryBuilder('categories')
+    const list = await categoriesQueryBuilder.
+    leftJoinAndSelect('categories.realEstate', 'real_estate')
+    .where('categories.id = :id', {id: idCategory})
+    .getOne()
 
+    if(list === null ){
+        throw new AppError('Category not found', 404)
+    }
+
+    // const listFormated = categoriesRealStateList.parse(list)
     return list
 }
 export default ListRealEstateByCategoryService
