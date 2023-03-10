@@ -42,6 +42,7 @@ const realEstateListByCategory = z.object({
 
 const realEstateListSchema = z.array(realEstateReturnSchema)
 
+
 export { 
     realEstateDataSchema,
     realEstateReturnSchema,

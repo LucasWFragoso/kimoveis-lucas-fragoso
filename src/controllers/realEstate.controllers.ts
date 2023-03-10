@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IRealEstateData } from "../interfaces/reaEstate.interface";
-import { createRealEstateService, ListRealEstateByCategoryService } from "../services/realEstate";
+import { createRealEstateService, ListRealEstateByCategoryService, listRealEstateService } from "../services/realEstate";
 
 export const createRealEstateController = async (req: Request, res: Response): Promise<Response> => {
     const isAdmin: boolean = req.user.isAdmin
@@ -18,4 +18,11 @@ export const ListRealEstateByCategoryController = async (req: Request, res: Resp
     
 
     return res.json(listRealEstateByCategory)
+}
+
+export const listRealEstateController = async (req: Request, res: Response): Promise<Response> => {
+
+    const listRealEstate = await listRealEstateService()
+
+    return res.json(listRealEstate)
 }
