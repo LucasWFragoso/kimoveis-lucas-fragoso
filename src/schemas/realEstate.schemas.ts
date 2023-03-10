@@ -1,24 +1,35 @@
 import { z } from 'zod';
 import { addressDataSchema, addressReturnSchema } from './addresses.schemas';
-import { categoriesReturnSchema } from './categories.schemas';
+import { categoriesDataSchema, categoriesReturnSchema } from './categories.schemas';
 
 const realEstateDataSchema = z.object({
     value: z.string().or(z.number()),
-    size: z.number(),
+    size: z.number().positive(),
     address: addressDataSchema,
     categoryId: z.number()
 })
 
 const realEstateReturnSchema =z.object({
-    id: z.number(),
     value: z.string().or(z.number()),
-    size: z.number(),
+    size: z.number().positive(),
+    address: z.object({
+        id: z.number(),
+        street: z.string(),
+        zipCode: z.string(),
+        number: z.string().optional().nullable(),
+        city: z.string(),
+        state: z.string()
+    }),
+    category: z.object({
+        id: z.number(),
+        name: z.string()
+    }),
+    id: z.number(),
     sold: z.boolean(),
-    address: addressReturnSchema,
-    category: categoriesReturnSchema,
     createdAt: z.string(),
     updatedAt: z.string()
 })
+
 
 const realEstateListByCategory = z.object({
     id: z.number(),

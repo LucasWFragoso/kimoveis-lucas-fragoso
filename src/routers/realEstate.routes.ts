@@ -6,7 +6,7 @@ import { realEstateDataSchema } from "../schemas/realEstate.schemas";
 
 const realEstateRoutes: Router = Router()
 
-realEstateRoutes.post('', ensureTokenIsValidMiddleware, ensureDataIsValidMiddleware(realEstateDataSchema), createRealEstateController)
+realEstateRoutes.post('',  ensureDataIsValidMiddleware(realEstateDataSchema), ensureTokenIsValidMiddleware, createRealEstateController)
 
 export {
     realEstateRoutes
