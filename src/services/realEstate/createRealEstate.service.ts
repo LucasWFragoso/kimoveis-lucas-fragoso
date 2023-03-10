@@ -14,21 +14,30 @@ const createRealEstateService = async (isAdmin: boolean, dataBody: IRealEstateDa
     const addressRepository: Repository<Address> = AppDataSource.getRepository(Address)
     const categoryRepository: Repository<Category> = AppDataSource.getRepository(Category)
 
+    const addressExist: Address | null = await addressRepository.findOneBy({
+        city: dataBody.address.city,
+        state: dataBody.address.state
+    })
+
+    if(addressExist !== null){
+        throw new AppError('Address already exists', 409)
+    }
+
     const addressCreated: Address = addressRepository.create(dataBody.address)
     await addressRepository.save(addressCreated)
     
-    const category: any = await categoryRepository.findOneBy({
+    const category: Category | null = await categoryRepository.findOneBy({
         id: dataBody.categoryId
     })
-    console.log(dataBody, addressCreated, category)
-    const reaEstateCreated: RealEstate = realEstateRepository.create({
+
+    const realEstateCreated: RealEstate = realEstateRepository.create({
         ...dataBody,
         address: addressCreated,
-        category: category
+        category: category!
     })
-    await realEstateRepository.save(reaEstateCreated)
-    
-    const newRealEstateValidated = realEstateReturnSchema.parse(reaEstateCreated)
+    await realEstateRepository.save(realEstateCreated)
+
+    const newRealEstateValidated = realEstateReturnSchema.parse(realEstateCreated)
 
     return newRealEstateValidated
 

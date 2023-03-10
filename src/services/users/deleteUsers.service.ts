@@ -5,22 +5,29 @@ import { AppError } from "../../errors"
 
 const deleteUserService = async (isAdmin: boolean, idPatch: number): Promise<void> => {
     const userRepository: Repository<User> = AppDataSource.getRepository(User)
-
-    if(!isAdmin){
-        throw new AppError('Insufficient permission', 403)
-    }
-
+    
     const userToDelete = await userRepository.findOne({
         where: {
             id: idPatch
         }
     })
 
-    if(!userToDelete){
-        throw new AppError('User not found or already deleted', 404)
+    if(isAdmin === false){
+        if(!userToDelete){
+            throw new AppError('User not found', 404)
+        }else if(userToDelete?.admin == true){
+            throw new AppError('Insufficient permission', 403)
+        }
+
+
+    }else{
+        if(!userToDelete){
+            throw new AppError('User not found', 404)
+        }
+    
+        await userRepository.softRemove(userToDelete!)
     }
 
-    await userRepository.softRemove(userToDelete!)
 }
 
 export default deleteUserService

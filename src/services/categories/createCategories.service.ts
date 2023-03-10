@@ -8,7 +8,7 @@ import { categoriesReturnSchema } from "../../schemas/categories.schemas";
 const createCategoriesService = async (isAdmin: boolean, categoriesData: ICategoriesData): Promise< ICategoriesReturn > => {
     
     if(!isAdmin){
-        throw new AppError('User not admin', 403)
+        throw new AppError('Insufficient permission', 403)
     }
     
     const categoriesRepository: Repository<Category> = AppDataSource.getRepository(Category)
