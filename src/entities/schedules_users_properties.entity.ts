@@ -8,18 +8,16 @@ class Schedule {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type: Date})
-    date: Date
+    @Column({type: 'date'})
+    date: string
 
-    @Column('time')
-    hour: Date;
+    @Column({type: 'time'})
+    hour: string;
 
     @ManyToOne(() => RealEstate, real_estate => real_estate.schedules )
-    @JoinColumn()
     realEstate: RealEstate
 
     @ManyToOne(() => User, users => users.schedules)
-    @JoinColumn()
     user: User
 }
 

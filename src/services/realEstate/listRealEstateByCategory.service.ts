@@ -15,8 +15,7 @@ const ListRealEstateByCategoryService = async (idCategory: number) => {
     if(list === null ){
         throw new AppError('Category not found', 404)
     }
-
-    // const listFormated = categoriesRealStateList.parse(list)
+    
     return list
 }
 export default ListRealEstateByCategoryService

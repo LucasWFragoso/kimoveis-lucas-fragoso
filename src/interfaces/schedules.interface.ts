@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { scheduleDataSchema } from '../schemas/schedules.schema';
+import { listSchedulesByRealEstateSchema, scheduleDataSchema } from '../schemas/schedules.schema';
 
 type IScheduleData = z.infer<typeof scheduleDataSchema>
+type IlistScheduleByRealEstate = z.infer<typeof listSchedulesByRealEstateSchema>
 
 export {
-    IScheduleData
+    IScheduleData,
+    IlistScheduleByRealEstate
 }
