@@ -17,12 +17,12 @@ export const ListRealEstateByCategoryController = async (req: Request, res: Resp
     const listRealEstateByCategory = await ListRealEstateByCategoryService(idCategory)
     
 
-    return res.json(listRealEstateByCategory)
+    return res.status(200).json(listRealEstateByCategory)
 }
 
 export const listRealEstateController = async (req: Request, res: Response): Promise<Response> => {
 
     const listRealEstate = await listRealEstateService()
 
-    return res.json(listRealEstate)
+    return res.status(200).json(listRealEstate)
 }

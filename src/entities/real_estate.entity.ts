@@ -29,10 +29,10 @@ class RealEstate{
     address: Address
 
     @ManyToOne(() => Category, categories => categories.name)
-    @JoinColumn()
     category: Category
 
     @OneToMany(() => Schedule, schedule => schedule.realEstate)
+    @JoinColumn()
     schedules: Schedule[]
 }
 

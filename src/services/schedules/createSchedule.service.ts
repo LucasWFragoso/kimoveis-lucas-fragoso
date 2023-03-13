@@ -4,7 +4,7 @@ import { RealEstate, Schedule, User } from "../../entities"
 import { AppError } from "../../errors"
 import { IScheduleData } from "../../interfaces/schedules.interface"
 
-const createScheduleService = async (idUser: number, isAdmin: boolean, dataBody: IScheduleData): Promise<any> => {
+const createScheduleService = async (idUser: number, isAdmin: boolean, dataBody: IScheduleData): Promise<string> => {
     const dayOfWeek: Date = new Date(dataBody.date);
     const hours: number = parseInt(((dataBody.hour).split(':', 1))[0]);
 
@@ -33,7 +33,7 @@ const createScheduleService = async (idUser: number, isAdmin: boolean, dataBody:
     
     const verifyScheduleRealEstateExist = await scheduleRepository
     .createQueryBuilder('schedules')
-    .where('schedules.date = :date', { date: new Date(dataBody.date)})
+    .where('schedules.date = :date', { date: dataBody.date})
     .andWhere('schedules.hour = :hour', { hour: dataBody.hour})
     .andWhere('schedules.realEstateId = :realEstate', { realEstate: dataBody.realEstateId})
     .getOne()
@@ -44,7 +44,7 @@ const createScheduleService = async (idUser: number, isAdmin: boolean, dataBody:
 
     const verifyScheduleUserExist = await scheduleRepository
     .createQueryBuilder('schedules')
-    .where('schedules.date = :date', { date: new Date(dataBody.date)})
+    .where('schedules.date = :date', { date: dataBody.date})
     .andWhere('schedules.hour = :hour', { hour: dataBody.hour})
     .getOne()
 
